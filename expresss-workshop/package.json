@@ -1,0 +1,20 @@
+{
+  "name": "expresss-workshop",
+  "version": "1.0.0",
+  "description": "an API REST using express .js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ape",
+    "rest",
+    "express",
+    "nodejs"
+  ],
+  "author": "Carlos Zahid Hernandez Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

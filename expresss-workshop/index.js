@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const pokedex = require('./pokedex.json')
 
 /*
 verbos http
@@ -14,9 +15,17 @@ app.listen(3000,() =>{
 
     app.get("/", (req, res, next) =>{
         res.status(200);
-        res.send("hello world");
+        const pokedex = pokedex.pokemon;
+        res.send(pokemon);
     })
 
-    console.log("server is running...")
+    app.get("/:name",(req, res, next) => {
+        console.log(req.params.name);
+        res.status(200)
+        res.send("hola, " + req.params.name)
+    })
 
+    app.listen(process.env.PORT || 3000, () => {
+        console.log("server is running...")
+    })
 })

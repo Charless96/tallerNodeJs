@@ -4,6 +4,7 @@
   "description": "an API REST using express .js",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +20,8 @@
   "author": "Carlos Zahid Hernandez Garcia",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
   },
   "bugs": {
     "url": "https://github.com/Charless96/tallerNodeJs/issues"

@@ -1,3 +1,4 @@
+const bodyparser = require('body-parser');
 const express = require('express');
 const app = express();
 const {pokemon} = require('./pokedex.json');
@@ -10,10 +11,15 @@ patch actuzliar datos (un solo dato)
 put "" (todos los elementos)
 delete eliminar un recurso
 */
-
+app.use(express.json()); //use para que una funcion se le aplique a todas las peticiones middleware
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res, next)=> {
     res.status(200).send("Bienvenido al pokedex");
+})
+
+app.post("/pokemon", (req, res, next) => {
+    return res.status(200).send(req.body)
 })
 
 app.get("/pokemon",(req, res, next)=> {

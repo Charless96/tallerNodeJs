@@ -13,37 +13,30 @@ delete eliminar un recurso
 
 
 app.get("/", (req, res, next)=> {
-    res.status(200);
-    res.send("Bienvenido al pokedex");
+    res.status(200).send("Bienvenido al pokedex");
 })
 
-app.get("/pokemon/all",(req, res, next)=> {
-    res.status(200);
-    res.send(pokemon);
+app.get("/pokemon",(req, res, next)=> {
+    res.status(200).send(pokemon);
 })
 
 app.get('/pokemon/:id([0-9]{1,3})', (req, res, next) => {
     const id = req.params.id -1;
-    if(id >= 0 && id <= 150){
-        res.status(200);
-        res.send(pokemon[req.params.id - 1])
-    }
-    else{
-        res.status(404);
-        res.send("pokemon no encontrado")
-    }
+    (id >= 0 && id <= 150) ? 
+    res.status(200).send(pokemon[req.params.id - 1]) : 
+    res.status(404).send("pokemon no encontrado")
 })
 
-app.get('/pokemon/:name', (req, res, next) => {
-    const name = req.params.name;
-    for(i = 0; i < pokemon.length; i++){
-        if(pokemon[i].name == name){
-            res.status(200);
-            res.send(pokemon[i])
-        }
-    }
-    res.status(404);
-    res.send("pokemon no encontrado")
+app.get('/pokemon/:name([A-Za-z]+)', (req, res, next) => {
+    const nombre = req.params.name;
+    // condicion ? valor si verdadero :valor si falso [operador ternario]
+    const pk = pokemon.filter((p) => {
+        return (p.name.toUpperCase() == nombre.toUpperCase()) ? p : null
+    });
+    
+    (pk.length > 0) ? 
+    res.status(200).send(pk) : 
+    res.status(404).send("pokemon no encontrado")
 })
 
 app.listen(process.env.PORT || 3000, ()=> {

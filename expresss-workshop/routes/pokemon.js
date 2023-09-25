@@ -4,22 +4,33 @@ const db = require('../config/database')
 
 //const pk = require('../pokedex.json').pokemon;
 
-pokemon.post("/", (req, res, next) => {
-    return res.status(200).send(req.body)
+pokemon.post("/", async (req, res, next) => {
+    const {pok_name, pok_height, pok_weight, pok_base_experience} = req.body //deconstruirlas
+    if(pok_name && pok_height && pok_weight && pok_base_experience){
+        let query = "INSERT INTO pokemon(pok_name, pok_height, pok_weight, pok_base_experience)";
+        query += ` VALUES('${pok_name}',${pok_height},${pok_weight},${pok_base_experience})`;
+        const rows = await db.query(query);
+        console.log(rows)
+        if(rows.affectedRows==1){
+            return res.status(200).json({code: 201, message: "pokemon insertado correctamente"})
+        }
+        return res.status(500).json({code: 500, message: "ocurrio un error"})    
+    }
+    return res.status(500).json({code: 500, message: "campos incompletos"})
 })
 
 pokemon.get('/', async (req, res, next)=> {
     const poki = await db.query("SELECT * FROM pokemon");
-    res.status(200).json({code: 1, message: poki})
+    res.status(200).json({code: 200, message: poki})
 })
 
 pokemon.get('/:id([0-9]{1,3})', async (req, res, next) => {
     const id = req.params.id;
-    if(id >= 0 && id <= 150){
+    if(id >= 0 && id <= 722){
         console.log(id)
         const pp = await db.query("SELECT * FROM pokemon WHERE pok_id = " + id);
         console.log(pp)
-        res.status(200).json({code: 1, message: pp})
+        res.status(200).json({code: 200, message: pp})
     }
     else{
         res.status(404).send({code: 404, message:"pk no encontrado"})
@@ -39,10 +50,10 @@ pokemon.get('/:name([A-Za-z]+)', async (req, res, next) => {
         const pp = await db.query("SELECT * FROM pokemon WHERE pok_name = '" + nombre+ "';")
         console.log(pp)
         if(pp.length > 0){
-            return res.status(200).json(pp)
+            return res.status(200).json({code: 200, message: pp})
         }
         else{
-           return res.status(404).send({code: 404, message:"pk no encontrado"})
+           return res.status(404).json({code: 404, message:"pk no encontrado"})
         }
     /*
     const pkmn = pk.filter((p) => {

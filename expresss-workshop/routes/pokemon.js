@@ -10,7 +10,7 @@ pokemon.post("/", (req, res, next) => {
 
 pokemon.get('/', async (req, res, next)=> {
     const poki = await db.query("SELECT * FROM pokemon");
-    res.status(200).json(poki)
+    res.status(200).json({code: 1, message: poki})
 })
 
 pokemon.get('/:id([0-9]{1,3})', async (req, res, next) => {
@@ -19,10 +19,10 @@ pokemon.get('/:id([0-9]{1,3})', async (req, res, next) => {
         console.log(id)
         const pp = await db.query("SELECT * FROM pokemon WHERE pok_id = " + id);
         console.log(pp)
-        res.status(200).json(pp)
+        res.status(200).json({code: 1, message: pp})
     }
     else{
-        res.status(404).send("pk no encontrado")
+        res.status(404).send({code: 404, message:"pk no encontrado"})
     }
     
     /*
@@ -36,10 +36,14 @@ pokemon.get('/:name([A-Za-z]+)', async (req, res, next) => {
     const nombre = req.params.name;
     // condicion ? valor si verdadero :valor si falso [operador ternario]
         console.log(nombre)
-        const pp = await db.query("SELECT * FROM pokemon WHERE pok_name = " + nombre)
+        const pp = await db.query("SELECT * FROM pokemon WHERE pok_name = '" + nombre+ "';")
         console.log(pp)
-        res.status(200).json(pp)
-  
+        if(pp.length > 0){
+            return res.status(200).json(pp)
+        }
+        else{
+           return res.status(404).send({code: 404, message:"pk no encontrado"})
+        }
     /*
     const pkmn = pk.filter((p) => {
         return (p.name.toUpperCase() == nombre.toUpperCase()) ? p : null

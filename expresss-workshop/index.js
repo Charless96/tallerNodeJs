@@ -9,7 +9,7 @@ verbos http
 get cada vez que se utiliza una url en el navegador
 post cuando se requiere guardar datos
 patch actuzliar datos (un solo dato)
-put "" (todos los elementos)
+put "" (todos los elementos) 
 delete eliminar un recurso
 */
 app.use(morgan('dev'));

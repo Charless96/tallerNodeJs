@@ -1,8 +1,14 @@
+//Dependencias
 const morgan = require('morgan')
 const express = require('express');
 const app = express();
-const pokemon = require('./routes/pokemon')
-const user = require('./routes/user')
+//routers
+const pokemon = require('./routes/pokemon');
+const user = require('./routes/user');
+//middleware
+const auth = require('./middleware/auth');
+const notFound = require('./middleware/notFound');
+const index = require('./middleware/index');
 //las llaves extraen el elemento que se esta pidiendo
 /*
 verbos http
@@ -17,17 +23,15 @@ app.use(express.json()); //use para que una funcion se le aplique a todas las pe
 app.use(express.urlencoded({ extended: true }));
 
 
-app.get("/", (req, res, next)=> {
-    res.status(200).json({code: 1, message:"Bienvenido al pokedex"});
-});
+app.get("/", index);
+
+app.use("/user", user);
+
+app.use(auth);
 
 app.use("/pokemon",pokemon);
 
-app.use("/user", user)
-
-app.use((req, res, next)  => {
-    return res.status(404).json({code:404, message: "url no encontrada"});
-});
+app.use(notFound);
 
 app.listen(process.env.PORT || 3000, ()=> {
     console.log("server is running...");

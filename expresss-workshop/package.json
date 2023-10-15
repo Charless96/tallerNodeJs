@@ -20,6 +20,7 @@
   "author": "Carlos Zahid Hernandez Garcia",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.5.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",

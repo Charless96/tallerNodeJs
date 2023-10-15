@@ -35,7 +35,7 @@ user.post("/login", async (req, res, next) =>{
             
         }
         else{
-            return res.status(401).json({code: 401, message: "usuario y/o contrasena incorrectos"});
+            return res.status(200).json({code: 401, message: "usuario y/o contrasena incorrectos"});
             
         }
     }

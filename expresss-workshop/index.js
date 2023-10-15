@@ -9,6 +9,7 @@ const user = require('./routes/user');
 const auth = require('./middleware/auth');
 const notFound = require('./middleware/notFound');
 const index = require('./middleware/index');
+const cors = require('./middleware/cors');
 //las llaves extraen el elemento que se esta pidiendo
 /*
 verbos http
@@ -18,6 +19,7 @@ patch actuzliar datos (un solo dato)
 put "" (todos los elementos) 
 delete eliminar un recurso
 */
+app.use(cors);
 app.use(morgan('dev'));
 app.use(express.json()); //use para que una funcion se le aplique a todas las peticiones middleware
 app.use(express.urlencoded({ extended: true }));
